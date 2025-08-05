@@ -2,8 +2,11 @@
 text_corrector.py: zápočtový program, MFF UK
 
 autor: Natálie Zýková
+
 Popis: Program načte český slovník a slovník častých chyb.
-Uživatel zadá text, který je poté opraven na základě Levenshteinovy vzdálenosti a častých chyb.
+       Uživatel zadá text, který je poté opraven na základě Levenshteinovy vzdálenosti a častých chyb.
+       
+Upozornění: Pro spuštění programu je třeba stáhnout dva pomocné soubory tohoto repozitáře do stejného adresáře
 """
 
 # knihovny
