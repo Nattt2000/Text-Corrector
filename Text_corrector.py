@@ -2,17 +2,15 @@
 text_corrector.py: zápočtový program, MFF UK
 
 autor: Natálie Zýková
-
 Popis: Program načte český slovník a slovník častých chyb.
-       Uživatel zadá text, který je poté opraven na základě Levenshteinovy vzdálenosti a častých chyb.
-       
-Upozornění: Pro spuštění programu je třeba stáhnout dva pomocné soubory tohoto repozitáře do stejného adresáře
+Uživatel zadá text, který je poté opraven na základě Levenshteinovy vzdálenosti a častých chyb.
 """
 
 # knihovny
 
 import random as rd
 import json
+from pprint import pprint
 
 
 # nahrání českého slovník, slovníku chyb a výchozího textu
@@ -32,6 +30,17 @@ text_list = text.split()
 
 # Funkce
 
+def zmensi_pismena(seznam_input):
+    """
+    V zadaném slově převede všechna velká písmena na malá.
+    """
+    text_list_mala = []
+    for zadane_slovo in seznam_input:
+        slovo_malym = zadane_slovo.lower()
+        text_list_mala.append(slovo_malym)
+    return(text_list_mala)
+
+    
 def levenshtein(slovo_1, slovo_2):
     """
     Vypočítá Levenshteinovu vzdálenost mezi dvěma slovy.
@@ -65,6 +74,7 @@ def levenshtein(slovo_1, slovo_2):
     vzdalenost = matice[len(slovo_1)][len(slovo_2)]
     return(vzdalenost)
 
+
 def vytvor_vzdalenosti(slovo_input, seznam_slov):
     """
     Vytvoří slovník Levenshteinových vzdáleností mezi vstupním slovem 
@@ -84,6 +94,7 @@ def vytvor_vzdalenosti(slovo_input, seznam_slov):
         slovnik_vzdalenosti[ceske_slovo] = vzdalenost
     return(slovnik_vzdalenosti)
 
+
 def vypis_slova_min(slovnik):
     """
     Najde slova s nejmenší Levenshteinovou vzdáleností.
@@ -101,6 +112,7 @@ def vypis_slova_min(slovnik):
         if vzdalenost == min_vzdalenost:
             slova_min.append(ceske_slovo)
     return(slova_min)
+
 
 def vyber_nejlepsi_slovo(slovo_input, zuzeny_seznam_slov):
     """
@@ -164,8 +176,10 @@ def vyber_nejlepsi_slovo(slovo_input, zuzeny_seznam_slov):
 
 # Volání
 
+text_list_mala = zmensi_pismena(text_list)
+
 vysledky = []
-for zadane_slovo in text_list:
+for zadane_slovo in text_list_mala:
     slovnik_vzdalenosti = vytvor_vzdalenosti(zadane_slovo, ceska_slova)
     slova_min = vypis_slova_min(slovnik_vzdalenosti)
     opravene_slovo = vyber_nejlepsi_slovo(zadane_slovo, slova_min)
@@ -177,7 +191,7 @@ for opravene_slovo, _ in vysledky:
 vsechna_opravena_slova = ' '.join(seznam_oprav)
 print(f"Opravený text: {vsechna_opravena_slova}")
 
-for zadane_slovo, (opravene_slovo, slova_min) in zip(text_list, vysledky):
+for zadane_slovo, (opravene_slovo, slova_min) in zip(text_list_mala, vysledky):
     if zadane_slovo == opravene_slovo:
         print(f"Slovo '{zadane_slovo}' je správně.")
     else:
