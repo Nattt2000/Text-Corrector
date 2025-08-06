@@ -10,7 +10,6 @@ Uživatel zadá text, který je poté opraven na základě Levenshteinovy vzdál
 
 import random as rd
 import json
-from pprint import pprint
 
 
 # nahrání českého slovník, slovníku chyb a výchozího textu
